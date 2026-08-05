@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Início — Meu Projeto Web</title>
+
+ 
+</head>
+
+<body>
+
+  <header>
+    <h1>Meu Projeto Web</h1>
+    <p>
+      Uma página criada e ampliada ao longo das aulas de HTML,
+      reunindo apresentação, navegação, imagens, listas e mídias.
+    </p>
+  </header>
+
+  <nav aria-label="Navegação principal">
+    <ul>
+      <li><a href="index.html">Início</a></li>
+      <li><a href="sobremim.html">Sobre mim</a></li>
+      <li><a href="midia.html">Mídia</a></li>
+      <li><a href="contato.html">Contato</a></li>
+      <li><a href="nossas_aulas.html">Nossas Aulas</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section class="destaque">
+      <h2>Bem-vindo ao meu site</h2>
+      <p>
+        Este projeto mostra o que aprendi até a Aula 09. A página começou
+        com uma estrutura simples e, aula após aula, recebeu novos textos,
+        seções, links, listas, imagens, áudio e vídeo.
+      </p>
+
+      <a class="botao" href="nossas_aulas.html">
+        Acompanhar o progresso das aulas
+      </a>
+    </section>
+
+    <section>
+      <h2>Conheça o projeto</h2>
+
+      <div class="grade">
+        <article class="cartao">
+          <h3>Sobre mim</h3>
+          <p>
+            Uma página com informações pessoais, interesses, habilidades
+            e objetivos de aprendizagem.
+          </p>
+          <a href="sobremim.html">Abrir página</a>
+        </article>
+
+        <article class="cartao">
+          <h3>Mídia</h3>
+          <p>
+            Espaço destinado a arquivos de áudio, vídeos locais e,
+            posteriormente, mídias externas.
+          </p>
+          <a href="midia.html">Abrir página</a>
+        </article>
+
+        <article class="cartao">
+          <h3>Contato</h3>
+          <p>
+            Página preparada para apresentar dados de contato e receber
+            informações por meio de formulário.
+          </p>
+          <a href="contato.html">Abrir página</a>
+        </article>
+
+        <article class="cartao">
+          <h3>Nossas Aulas</h3>
+          <p>
+            Registro do progresso do projeto, mostrando o que foi
+            construído em cada aula.
+          </p>
+          <a href="nossas_aulas.html">Ver progresso</a>
+        </article>
+
+        <article class="cartao">
+          <h3>Imagens</h3>
+          <p>
+            As imagens são organizadas em pastas e recebem texto
+            alternativo para melhorar a acessibilidade.
+          </p>
+          <a href="#galeria">Ver exemplo</a>
+        </article>
+
+        <article class="cartao">
+          <h3>Conteúdos aprendidos</h3>
+          <p>
+            Estrutura HTML, tags semânticas, formatação, links,
+            listas, imagens, áudio e vídeo.
+          </p>
+          <a href="#aprendizados">Ver lista</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="galeria">
+      <h2>Imagem em destaque</h2>
+
+      <img
+        class="foto-destaque"
+        src="fotos/minha-foto.jpg"
+        alt="Imagem escolhida pelo estudante para representar seu projeto"
+      >
+
+      <p class="legenda">
+        Substitua <strong>fotos/minha-foto.jpg</strong> pela imagem utilizada no seu projeto.
+      </p>
+    </section>
+
+    <section id="aprendizados">
+      <h2>O que já aprendi</h2>
+
+      <div class="duas-colunas">
+        <div>
+          <h3>HTML e organização</h3>
+          <ol class="lista-projeto">
+            <li>Criar e salvar arquivos com a extensão <code>.html</code>.</li>
+            <li>Organizar a estrutura com <code>head</code> e <code>body</code>.</li>
+            <li>Usar cabeçalho, navegação, seções e rodapé.</li>
+            <li>Criar links entre diferentes páginas.</li>
+            <li>Organizar conteúdos usando listas.</li>
+          </ol>
+        </div>
+
+        <div>
+          <h3>Conteúdo e mídia</h3>
+          <ul class="lista-projeto">
+            <li>Inserir imagens com <code>src</code> e <code>alt</code>.</li>
+            <li>Controlar o tamanho de imagens e vídeos.</li>
+            <li>Adicionar áudio com controles de reprodução.</li>
+            <li>Adicionar vídeos locais à página.</li>
+            <li>Manter o mesmo menu em todos os arquivos.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Prévia da página de mídia</h2>
+      <p>
+        Os arquivos abaixo são exemplos. Para funcionar, coloque os
+        arquivos indicados dentro da pasta <code>midias</code>.
+      </p>
+
+      <div class="duas-colunas">
+        <div>
+          <h3>Áudio</h3>
+          <audio class="midia-preview" controls>
+            <source src="midias/minha-musica.mp3" type="audio/mpeg">
+            Seu navegador não suporta reprodução de áudio.
+          </audio>
+        </div>
+
+        <div>
+          <h3>Vídeo</h3>
+          <video class="midia-preview" controls>
+            <source src="midias/meu-video.mp4" type="video/mp4">
+            Seu navegador não suporta reprodução de vídeo.
+          </video>
+        </div>
+      </div>
+
+      <a class="botao" href="midia.html">Abrir a página completa de mídia</a>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Meu Projeto Web — desenvolvimento realizado até a Aula 09.</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aula 9 — Áudio e Vídeo no HTML</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f5f5f0; color: #1a1a1a; line-height: 1.7; }
+  .container { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 3px 12px; border-radius: 20px; margin-bottom: 12px; }
+  .badge-aula{background:#CECBF6;color:#3C3489;} .badge-ativ{background:#9FE1CB;color:#085041;} .badge-obs{background:#FAC775;color:#633806;} .badge-dest{background:#F5C4B3;color:#712B13;}
+  h1{font-size:26px;font-weight:700;margin-bottom:8px;} h2{font-size:18px;font-weight:600;margin:2rem 0 .6rem;} p{font-size:15px;color:#444;margin-bottom:.6rem;}
+  hr.divider{border:none;border-top:1px solid #ddd;margin:1.5rem 0;}
+  code{font-family:"Courier New",monospace;font-size:13px;background:#eee;border:1px solid #ddd;padding:1px 6px;border-radius:4px;color:#1a1a1a;}
+  .obs-box{background:#fff8ec;border-left:3px solid #EF9F27;border-radius:0 8px 8px 0;padding:.75rem 1.25rem;margin:.75rem 0;}
+  .dest-box{background:#fff2ee;border-left:3px solid #D85A30;border-radius:0 8px 8px 0;padding:.75rem 1.25rem;margin:.75rem 0;}
+  .info-box{background:#eaf3fb;border-left:3px solid #378ADD;border-radius:0 8px 8px 0;padding:.75rem 1.25rem;margin:.75rem 0;}
+  .desafio{border:1px solid #ddd;border-radius:10px;overflow:hidden;margin-bottom:1.25rem;}
+  .desafio-header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#f5f5f0;border-bottom:1px solid #ddd;}
+  .desafio-num{width:28px;height:28px;border-radius:50%;background:#EEEDFE;color:#534AB7;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .desafio-title{font-size:14px;font-weight:600;}
+  .desafio-body{padding:1rem 1.25rem;background:#fff;} .desafio-body p{font-size:14px;margin-bottom:.6rem;}
+  .file-block{border:1px solid #ddd;border-radius:8px;overflow:hidden;margin:.75rem 0;}
+  .file-header{display:flex;align-items:center;gap:10px;padding:8px 12px;background:#f0f0ea;border-bottom:1px solid #ddd;}
+  .file-icon{width:26px;height:26px;border-radius:6px;background:#E1F5EE;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:9px;font-weight:700;color:#085041;flex-shrink:0;}
+  .file-name{font-size:13px;font-weight:600;font-family:monospace;}
+  .file-body{background:#f8f8f5;padding:.9rem 1.1rem;overflow-x:auto;}
+  .file-body pre{font-family:"Courier New",monospace;font-size:12.5px;line-height:2;white-space:pre;color:#1a1a1a;}
+  .ct{color:#0F6E56;} .ca{color:#854F0B;} .cv{color:#993556;} .cc{color:#888;} .cx{color:#333;}
+  table.attrs{width:100%;border-collapse:collapse;margin:.75rem 0;}
+  table.attrs th{font-size:12px;font-weight:600;color:#666;text-align:left;padding:6px 10px;border-bottom:1px solid #ddd;background:#f5f5f0;}
+  table.attrs td{font-size:13px;color:#444;padding:8px 10px;border-bottom:1px solid #eee;vertical-align:top;line-height:1.5;}
+  table.attrs td:first-child{font-family:monospace;color:#1a1a1a;white-space:nowrap;}
+  table.attrs tr:last-child td{border-bottom:none;}
+  .tag-section{border:1px solid #ddd;border-radius:10px;overflow:hidden;margin-bottom:1.5rem;}
+  .tag-section-header{padding:12px 16px;border-bottom:1px solid #ddd;display:flex;align-items:center;gap:12px;}
+  .tag-section-title{font-size:15px;font-weight:600;}
+  .tag-section-body{padding:1rem 1.25rem;}
+  .tag-section-body p{font-size:14px;margin-bottom:.75rem;}
+
+  .embed-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:.75rem 0;}
+  .embed-card{border:1px solid #ddd;border-radius:10px;overflow:hidden;background:#fff;}
+  .embed-card-header{padding:10px 14px;background:#f5f5f0;border-bottom:1px solid #ddd;font-size:13px;font-weight:600;}
+  .embed-card-body{padding:14px;}
+  .iframe-responsive{position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:8px;background:#111;}
+  .iframe-responsive iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .music-frame{padding-top:56.25%;}
+  @media(max-width:600px){.embed-grid{grid-template-columns:1fr;}}
+
+</style>
+</head>
+<body>
+<div class="container">
+
+  <span class="badge badge-aula">Aula 9</span>
+  <h1>Áudio e Vídeo no HTML</h1>
+  <p>O HTML5 trouxe suporte nativo para áudio e vídeo diretamente nas páginas, sem precisar de plugins externos. Nesta aula você vai aprender as tags <code>&lt;audio&gt;</code> e <code>&lt;video&gt;</code> e criar uma página de mídia para o seu site.</p>
+
+  <hr class="divider">
+
+  <div class="tag-section">
+    <div class="tag-section-header" style="background:#E1F5EE;">
+      <span class="tag-section-title">A tag <code>&lt;audio&gt;</code></span>
+    </div>
+    <div class="tag-section-body">
+      <p>Insere um player de áudio na página. O texto entre as tags de abertura e fechamento é exibido apenas nos navegadores que não suportam a tag.</p>
+      <div class="file-body" style="border:1px solid #ddd;border-radius:8px;margin-bottom:.75rem;">
+        <pre><span class="ct">&lt;audio</span> <span class="ca">src</span>=<span class="cv">"musica/minha-musica.mp3"</span> <span class="ca">controls</span><span class="ct">&gt;</span>
+  <span class="cx">Seu navegador não suporta a tag audio.</span>
+<span class="ct">&lt;/audio&gt;</span></pre>
+      </div>
+      <table class="attrs">
+        <tr><th>Atributo</th><th>Função</th></tr>
+        <tr><td>src</td><td>Caminho para o arquivo de áudio</td></tr>
+        <tr><td>controls</td><td>Exibe os controles de play, pause e volume — praticamente obrigatório</td></tr>
+        <tr><td>autoplay</td><td>Inicia a reprodução automaticamente ao carregar a página</td></tr>
+        <tr><td>loop</td><td>Reinicia o áudio automaticamente ao terminar</td></tr>
+        <tr><td>muted</td><td>Começa com o volume zerado</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="tag-section">
+    <div class="tag-section-header" style="background:#EEEDFE;">
+      <span class="tag-section-title">A tag <code>&lt;video&gt;</code></span>
+    </div>
+    <div class="tag-section-body">
+      <p>Funciona de forma muito parecida com <code>&lt;audio&gt;</code>, com atributos idênticos e mais um exclusivo: o <code>poster</code>.</p>
+      <div class="file-body" style="border:1px solid #ddd;border-radius:8px;margin-bottom:.75rem;">
+        <pre><span class="ct">&lt;video</span>
+  <span class="ca">src</span>=<span class="cv">"videos/meu-video.mp4"</span>
+  <span class="ca">controls</span>
+  <span class="ca">width</span>=<span class="cv">"400"</span>
+  <span class="ca">poster</span>=<span class="cv">"fotos/capa-video.jpg"</span>
+<span class="ct">&gt;</span>
+  <span class="cx">Seu navegador não suporta a tag video.</span>
+<span class="ct">&lt;/video&gt;</span></pre>
+      </div>
+      <table class="attrs">
+        <tr><th>Atributo</th><th>Função</th></tr>
+        <tr><td>src</td><td>Caminho para o arquivo de vídeo</td></tr>
+        <tr><td>controls</td><td>Exibe os controles de reprodução</td></tr>
+        <tr><td>width</td><td>Largura do player em pixels ou porcentagem</td></tr>
+        <tr><td>poster</td><td>Imagem exibida antes do vídeo ser reproduzido — a capa</td></tr>
+        <tr><td>autoplay</td><td>Inicia a reprodução automaticamente</td></tr>
+        <tr><td>loop</td><td>Reinicia ao terminar</td></tr>
+        <tr><td>muted</td><td>Começa sem áudio</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h2>Suporte a múltiplos formatos com <code>&lt;source&gt;</code></h2>
+  <p>Nem todos os navegadores suportam os mesmos formatos de vídeo e áudio. Para garantir que o conteúdo toque em qualquer navegador, você pode oferecer o mesmo arquivo em mais de um formato usando a tag <code>&lt;source&gt;</code>. O navegador escolhe o primeiro que conseguir reproduzir.</p>
+
+  <div class="file-body" style="border:1px solid #ddd;border-radius:8px;margin:.75rem 0;">
+    <pre><span class="ct">&lt;video</span> <span class="ca">controls</span> <span class="ca">width</span>=<span class="cv">"400"</span><span class="ct">&gt;</span>
+  <span class="ct">&lt;source</span> <span class="ca">src</span>=<span class="cv">"videos/meu-video.mp4"</span>  <span class="ca">type</span>=<span class="cv">"video/mp4"</span><span class="ct">&gt;</span>
+  <span class="ct">&lt;source</span> <span class="ca">src</span>=<span class="cv">"videos/meu-video.webm"</span> <span class="ca">type</span>=<span class="cv">"video/webm"</span><span class="ct">&gt;</span>
+  <span class="cx">Seu navegador não suporta a tag video.</span>
+<span class="ct">&lt;/video&gt;</span></pre>
+  </div>
+
+  <div class="obs-box"><p style="font-size:13px;">Quando você usa <code>&lt;source&gt;</code>, retire o atributo <code>src</code> da tag <code>&lt;video&gt;</code> ou <code>&lt;audio&gt;</code> — o caminho vai apenas para dentro de cada <code>&lt;source&gt;</code>.</p></div>
+
+  <hr class="divider">
+
+
+  <hr class="divider">
+
+  <h2>Mídia externa com <code>&lt;iframe&gt;</code></h2>
+  <p>Nem toda mídia precisa estar salva na pasta do site. Plataformas como o YouTube fornecem um código de incorporação que permite executar o conteúdo dentro da própria página. Para isso, usamos a tag <code>&lt;iframe&gt;</code>.</p>
+
+  <div class="info-box">
+    <p style="font-size:13px;">
+      O endereço comum de compartilhamento não deve ser colocado diretamente no <code>src</code>.
+      Para incorporar um vídeo, use o formato <code>https://www.youtube.com/embed/ID_DO_VIDEO</code>.
+    </p>
+  </div>
+
+  <div class="embed-grid">
+    <div class="embed-card">
+      <div class="embed-card-header">Demonstração — vídeo do YouTube</div>
+      <div class="embed-card-body">
+        <div class="iframe-responsive">
+          <iframe
+            src="https://www.youtube.com/embed/jNQXAC9IVRw"
+            title="Demonstração de vídeo incorporado do YouTube"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="embed-card">
+      <div class="embed-card-header">Demonstração — música compartilhada pelo YouTube Music</div>
+      <div class="embed-card-body">
+        <div class="iframe-responsive music-frame">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="Demonstração de música incorporada"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="obs-box">
+    <p style="font-size:13px;">
+      Uma música compartilhada pelo YouTube Music normalmente possui um identificador de vídeo.
+      Para exibi-la dentro da página, use esse identificador no player incorporado do YouTube.
+      Alguns conteúdos podem impedir a incorporação por decisão do responsável pelo canal.
+    </p>
+  </div>
+
+  <h2>Como incorporar um vídeo do YouTube</h2>
+
+  <div class="file-block">
+    <div class="file-header">
+      <div class="file-icon">yt</div>
+      <span class="file-name">midia.html — vídeo externo</span>
+    </div>
+    <div class="file-body"><pre><span class="ct">&lt;iframe</span>
+  <span class="ca">src</span>=<span class="cv">"https://www.youtube.com/embed/ID_DO_VIDEO"</span>
+  <span class="ca">title</span>=<span class="cv">"Título do vídeo"</span>
+  <span class="ca">width</span>=<span class="cv">"560"</span>
+  <span class="ca">height</span>=<span class="cv">"315"</span>
+  <span class="ca">allowfullscreen</span><span class="ct">&gt;</span>
+<span class="ct">&lt;/iframe&gt;</span></pre></div>
+  </div>
+
+  <h2>Como usar uma música compartilhada pelo YouTube Music</h2>
+  <p>Abra a música, copie o link de compartilhamento e identifique o código que aparece depois de <code>v=</code>. Depois, coloque esse código no endereço de incorporação.</p>
+
+  <div class="file-block">
+    <div class="file-header">
+      <div class="file-icon">♪</div>
+      <span class="file-name">exemplo de transformação do link</span>
+    </div>
+    <div class="file-body"><pre><span class="cc">&lt;!-- Link compartilhado --&gt;</span>
+<span class="cx">https://music.youtube.com/watch?v=ID_DA_MUSICA</span>
+
+<span class="cc">&lt;!-- Endereço usado no iframe --&gt;</span>
+<span class="cx">https://www.youtube.com/embed/ID_DA_MUSICA</span></pre></div>
+  </div>
+
+  <div class="dest-box">
+    <span class="badge badge-dest">Boas práticas</span>
+    <p style="font-size:13px;margin-top:6px;">
+      Sempre adicione um atributo <code>title</code> que explique o conteúdo do player.
+      Evite ativar reprodução automática, pois ela pode incomodar o visitante e ser bloqueada pelo navegador.
+    </p>
+  </div>
+
+
+  <span class="badge badge-ativ">Atividade Prática 9</span>
+  <h2 style="margin-top:.4rem;">Criando a página de mídia do seu site</h2>
+  <p>Você vai criar o arquivo <code>midia.html</code>, inserir mídias locais e externas e adicioná-lo ao menu de navegação de todas as páginas do site.</p>
+
+  <div class="desafio">
+    <div class="desafio-header"><div class="desafio-num">1</div><div class="desafio-title">Criar o arquivo midia.html com seção de áudio</div></div>
+    <div class="desafio-body">
+      <p>Dentro da pasta <code>meu-site</code>, crie uma subpasta chamada <code>midias</code> e coloque dentro dela um arquivo de áudio de sua preferência (pode ser qualquer .mp3 que você tenha). Depois crie o arquivo <code>midia.html</code>.</p>
+      <div class="file-block">
+        <div class="file-header"><div class="file-icon">mid</div><span class="file-name">midia.html</span></div>
+        <div class="file-body"><pre><span class="ct">&lt;html&gt;</span>
+<span class="ct">&lt;head&gt;</span>
+  <span class="ct">&lt;meta</span> <span class="ca">charset</span>=<span class="cv">"UTF-8"</span><span class="ct">&gt;</span>
+  <span class="ct">&lt;title&gt;</span><span class="cx">Mídia — [seu nome]</span><span class="ct">&lt;/title&gt;</span>
+<span class="ct">&lt;/head&gt;</span>
+<span class="ct">&lt;body&gt;</span>
+
+  <span class="ct">&lt;header&gt;&lt;h1&gt;</span><span class="cx">[seu nome]</span><span class="ct">&lt;/h1&gt;&lt;/header&gt;</span>
+
+  <span class="ct">&lt;nav&gt;</span>
+    <span class="ct">&lt;a</span> <span class="ca">href</span>=<span class="cv">"index.html"</span><span class="ct">&gt;</span><span class="cx">Início</span><span class="ct">&lt;/a&gt;</span>
+    <span class="ct">&lt;a</span> <span class="ca">href</span>=<span class="cv">"sobremim.html"</span><span class="ct">&gt;</span><span class="cx">Sobre mim</span><span class="ct">&lt;/a&gt;</span>
+    <span class="ct">&lt;a</span> <span class="ca">href</span>=<span class="cv">"midia.html"</span><span class="ct">&gt;</span><span class="cx">Mídia</span><span class="ct">&lt;/a&gt;</span>
+    <span class="ct">&lt;a</span> <span class="ca">href</span>=<span class="cv">"contato.html"</span><span class="ct">&gt;</span><span class="cx">Contato</span><span class="ct">&lt;/a&gt;</span>
+  <span class="ct">&lt;/nav&gt;</span>
+
+  <span class="ct">&lt;section&gt;</span>
+    <span class="ct">&lt;h2&gt;</span><span class="cx">Minha música favorita</span><span class="ct">&lt;/h2&gt;</span>
+    <span class="ct">&lt;p&gt;</span><span class="cx">Ouça uma das minhas músicas favoritas:</span><span class="ct">&lt;/p&gt;</span>
+    <span class="ct">&lt;audio</span> <span class="ca">src</span>=<span class="cv">"midias/minha-musica.mp3"</span> <span class="ca">controls</span><span class="ct">&gt;</span>
+      <span class="cx">Seu navegador não suporta a tag audio.</span>
+    <span class="ct">&lt;/audio&gt;</span>
+  <span class="ct">&lt;/section&gt;</span>
+
+  <span class="ct">&lt;footer&gt;&lt;p&gt;</span><span class="cx">[seu nome] — Todos os direitos reservados — 2025</span><span class="ct">&lt;/p&gt;&lt;/footer&gt;</span>
+
+<span class="ct">&lt;/body&gt;</span>
+<span class="ct">&lt;/html&gt;</span></pre></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="desafio">
+    <div class="desafio-header"><div class="desafio-num">2</div><div class="desafio-title">Adicionar uma seção de vídeo</div></div>
+    <div class="desafio-body">
+      <p>Adicione uma seção de vídeo ao <code>midia.html</code>. Coloque um arquivo <code>.mp4</code> na pasta <code>midias</code> ou use um vídeo de demonstração.</p>
+      <div class="file-block">
+        <div class="file-header"><div class="file-icon">mid</div><span class="file-name">midia.html — nova seção a inserir antes do &lt;footer&gt;</span></div>
+        <div class="file-body"><pre><span class="ct">&lt;section&gt;</span>
+  <span class="ct">&lt;h2&gt;</span><span class="cx">Meu vídeo favorito</span><span class="ct">&lt;/h2&gt;</span>
+  <span class="ct">&lt;p&gt;</span><span class="cx">Um vídeo que gosto muito:</span><span class="ct">&lt;/p&gt;</span>
+  <span class="ct">&lt;video</span>
+    <span class="ca">src</span>=<span class="cv">"midias/meu-video.mp4"</span>
+    <span class="ca">controls</span>
+    <span class="ca">width</span>=<span class="cv">"400"</span>
+  <span class="ct">&gt;</span>
+    <span class="cx">Seu navegador não suporta a tag video.</span>
+  <span class="ct">&lt;/video&gt;</span>
+<span class="ct">&lt;/section&gt;</span></pre></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="desafio">
+    <div class="desafio-header"><div class="desafio-num">3</div><div class="desafio-title">Testar os atributos um a um</div></div>
+    <div class="desafio-body">
+      <p>Experimente adicionar e remover cada atributo abaixo na tag <code>&lt;audio&gt;</code> para ver o efeito de cada um.</p>
+      <div class="file-block">
+        <div class="file-header"><div class="file-icon">mid</div><span class="file-name">midia.html — teste de atributos</span></div>
+        <div class="file-body"><pre><span class="cc">&lt;!-- teste 1: sem controls — sem controles visíveis --&gt;</span>
+<span class="ct">&lt;audio</span> <span class="ca">src</span>=<span class="cv">"midias/minha-musica.mp3"</span><span class="ct">&gt;&lt;/audio&gt;</span>
+
+<span class="cc">&lt;!-- teste 2: com loop — repete automaticamente --&gt;</span>
+<span class="ct">&lt;audio</span> <span class="ca">src</span>=<span class="cv">"midias/minha-musica.mp3"</span> <span class="ca">controls</span> <span class="ca">loop</span><span class="ct">&gt;&lt;/audio&gt;</span>
+
+<span class="cc">&lt;!-- teste 3: com muted — inicia sem som --&gt;</span>
+<span class="ct">&lt;audio</span> <span class="ca">src</span>=<span class="cv">"midias/minha-musica.mp3"</span> <span class="ca">controls</span> <span class="ca">muted</span><span class="ct">&gt;&lt;/audio&gt;</span></pre></div>
+      </div>
+      <div class="obs-box"><p style="font-size:13px;">Atributos como <code>controls</code>, <code>loop</code> e <code>muted</code> não precisam de valor — basta escrever o nome do atributo. A presença deles já ativa o comportamento.</p></div>
+    </div>
+  </div>
+
+  <div class="desafio">
+    <div class="desafio-header"><div class="desafio-num">4</div><div class="desafio-title">Atualizar o menu de navegação em todos os arquivos</div></div>
+    <div class="desafio-body">
+      <p>Abra os arquivos <code>index.html</code>, <code>sobremim.html</code> e <code>contato.html</code> e adicione o link para <code>midia.html</code> no <code>&lt;nav&gt;</code> de cada um. O menu precisa ser igual em todas as páginas.</p>
+      <div class="file-block">
+        <div class="file-header"><div class="file-icon">nav</div><span class="file-name">nav atualizado — copiar para todos os arquivos</span></div>
+        <div class="file-body"><pre><span class="ct">&lt;nav&gt;</span>
+  <span class="ct">&lt;a</span> <span class="ca">href</span>=<span class="cv">"index.html"</span><span class="ct">&gt;</span><span class="cx">Início</span><span class="ct">&lt;/a&gt;</span>
+  <span class="ct">&lt;a</span> <span class="ca">href</span>=<span class="cv">"sobremim.html"</span><span class="ct">&gt;</span><span class="cx">Sobre mim</span><span class="ct">&lt;/a&gt;</span>
+  <span class="ct">&lt;a</span> <span class="ca">href</span>=<span class="cv">"midia.html"</span><span class="ct">&gt;</span><span class="cx">Mídia</span><span class="ct">&lt;/a&gt;</span>
+  <span class="ct">&lt;a</span> <span class="ca">href</span>=<span class="cv">"contato.html"</span><span class="ct">&gt;</span><span class="cx">Contato</span><span class="ct">&lt;/a&gt;</span>
+<span class="ct">&lt;/nav&gt;</span></pre></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="desafio">
+    <div class="desafio-header">
+      <div class="desafio-num">5</div>
+      <div class="desafio-title">Incorporar um vídeo e uma música externos</div>
+    </div>
+    <div class="desafio-body">
+      <p>Escolha um vídeo do YouTube e uma música compartilhada pelo YouTube Music. Copie os identificadores e crie dois players com <code>&lt;iframe&gt;</code> dentro do arquivo <code>midia.html</code>.</p>
+      <p>Para concluir:</p>
+      <p>1. Os dois players devem executar dentro da página.<br>
+      2. Cada <code>&lt;iframe&gt;</code> deve possuir um <code>title</code> descritivo.<br>
+      3. Os players não podem ultrapassar a largura da tela.<br>
+      4. O conteúdo escolhido deve ser adequado ao ambiente escolar.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
